@@ -1,0 +1,62 @@
+var createError = require('http-errors');
+var app = require('express')();
+var path = require('path');
+var cors = require('cors');
+var bodyParser = require('body-parser');
+var express = require('express');
+
+var models = require('./models');
+var version = '/v1';
+
+require('dotenv').config();
+
+const portValidation = require('./utils/port_validator');
+
+var port = portValidation.normalizePort(process.env.PORT || '8080');
+
+const config = require('./config/config.js');
+//start route info
+
+const pokemonRoutes = require('./routes/pokemon.routes');
+
+const test = require('../vanillaPokedex-backend/sequelize');
+
+
+app.use(express.static(path.join(__dirname, 'images')));
+
+global.HELPER = require('./utils/helper');
+global.ERROR_CODES = require('./utils/error_codes');
+
+app.use(version + '/pokedex', pokemonRoutes)
+
+
+// Check if apis are running
+app.get('/health', (req,res)=>{
+    res.send({message:ERROR_CODES.HEALTH});
+});
+
+//End route info
+app.disable('x-powered-by');
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res) {
+    res.send('Done test function')
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  console.log(err)
+});
+
+module.export = models.sequelize.sync().then(result => {
+
+  console.log(result);
+  app.listen(port);
+  console.log('App listening live on '+port);
+
+});
+
