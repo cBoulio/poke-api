@@ -7,6 +7,6 @@
     "dialect": "mysql",
     "port":"3306",
     "operatorsAliases": false
-  
+     
 }
 

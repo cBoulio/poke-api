@@ -4,6 +4,23 @@ const pokemon = require('../json/pokemon');
 
 exports.getAllPokemon = async () => {
     return new Promise(async (resolve,reject) =>{
+
+        Albums.findAll({}).then(pokemon => {
+
+            console.log(pokemon);
+
+        })
+          .catch(console.error)
+
+    });
+    
+};
+
+
+
+
+exports.getAllPokemon = async () => {
+    return new Promise(async (resolve,reject) =>{
         pool.query('SELECT * FROM pokemon ORDER BY number ASC', (error, results) => {
             if (error) {
               throw error

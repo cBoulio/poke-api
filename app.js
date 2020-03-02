@@ -9,7 +9,7 @@ const cors = require('cors')
 // APP VERSION -- 
 const version = '/v1';
 
-require('dotenv').config();
+
 
 const port = process.env.PORT;
 // we set the env here so when we change it our app uses a different db.
@@ -25,6 +25,8 @@ const trainerRoutes = require('./routes/trainer.routes');
 const editionRoutes = require('./routes/edition.routes');
 const preconRoutes  = require('./routes/precon.routes');
 
+
+
 const userRoutes    = require('./routes/user.routes');
 
 app.use(logger('dev'));
@@ -39,6 +41,7 @@ app.use(version + '/trainer', trainerRoutes);
 app.use(version + '/edition', editionRoutes);
 app.use(version + '/precon', preconRoutes);
 app.use(version + '/user', userRoutes);
+//app.use(version + '/admin', adminRoutes);
 
 // Check if apis are running
 app.get('/health', (req,res)=>{

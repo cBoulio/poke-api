@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "db_Admin",
+    "password": "dangerMouse535",
+    "database": "Vanilla_Pokedex",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "db_Admin",
+    "password": null,
+    "database": "Vanilla_Pokedex",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "db_Admin",
+    "password": "dangerMouse535",
+    "database": "Vanilla_Pokedex",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  }
+}
+
+    
+
