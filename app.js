@@ -2,14 +2,14 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const app = express();
 const cors = require('cors')
+const authorizer = require('./utils/authorizer');
 
 // APP VERSION -- 
 const version = '/v1';
-
-
 
 const port = process.env.PORT;
 // we set the env here so when we change it our app uses a different db.
@@ -18,6 +18,7 @@ const env = process.env.NODE_ENV;
 global.HELPER = require('./utils/helper');
 global.MESSAGE_CODES = require('./utils/message_codes');
 global.db = require('./config/db_connection');
+
 
 //static-routes
 const pokemonRoutes = require('./routes/pokemon.routes');
@@ -31,8 +32,9 @@ const userRoutes    = require('./routes/user.routes');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(authorizer);
 app.use(express.static(path.join(__dirname, 'images')));
 app.use(cors())
 
@@ -41,6 +43,7 @@ app.use(version + '/trainer', trainerRoutes);
 app.use(version + '/edition', editionRoutes);
 app.use(version + '/precon', preconRoutes);
 app.use(version + '/user', userRoutes);
+
 //app.use(version + '/admin', adminRoutes);
 
 // Check if apis are running
